@@ -23,6 +23,8 @@ def write_metrics(metrics, url, apikey):
                 'tags': [],
             }
         )
+    # sort by ts
+    grafana_data.sort(key=lambda obj: obj['time'])
     result = requests.post(url, json=grafana_data, headers=headers)
     if result.status_code != 200:
         raise Exception(result.text)
