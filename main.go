@@ -23,7 +23,7 @@ func createPoint(name string, interval int, val float64, time int64) *schema.Met
 		Unit:     "",         // not needed or used yet
 		Time:     time,       // unix timestamp in seconds
 		Mtype:    "gauge",    // not used yet. but should be one of gauge rate count counter timestamp
-		Tags:     []string{}, // not needed or used yet. can be single words or key:value pairs
+		Tags:     []string{}, // not needed or used yet. can be single words or key=value pairs
 	}
 	md.SetId()
 	return &md
