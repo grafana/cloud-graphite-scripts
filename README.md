@@ -1,6 +1,8 @@
-# hosted-metrics-sender-example
+# Grafana Cloud Graphite scripts
 
-Example programs to send data to GrafanaCloud Hosted Metrics Graphite service.
+## send
+
+Example programs to send data to Grafana Cloud Graphite service.
 Does *not* work for GrafanaCloud Hosted Metrics Prometheus.
 
 In:
@@ -15,3 +17,7 @@ Note, there's 3 different formats to send us data:
 * binary protocol, snappy compressed (content-type "rt-metric-binary-snappy")
 
 For simplicity the examples use the json format.
+
+## query
+
+* walk_metrics.py : tool for discovering entire metrics hierarchy
