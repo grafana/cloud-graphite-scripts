@@ -92,9 +92,9 @@ if __name__ == '__main__':
     parser.add_argument("--prefix", help="Metrics prefix", required=False, default='')
     parser.add_argument("--user", help="Basic Auth username", required=False)
     parser.add_argument("--password", help="Basic Auth password", required=False)
-    parser.add_argument("--concurrency", help="concurrency", default=8, required=False, type=int)
-    parser.add_argument("--from", dest='seriesFrom', help="only get series that have been active since this time", required=False)
-    parser.add_argument("--depth", type=int, help="maximum depth to traverse. If set, the branches at the depth will be printed", required=False)
+    parser.add_argument("--concurrency", help="Concurrency", default=8, required=False, type=int)
+    parser.add_argument("--from", dest='seriesFrom', help="Only get series that have been active since this time.", required=False)
+    parser.add_argument("--depth", type=int, help="Maximum depth to traverse. If set, then the branches at the depth are printed.", required=False)
     args = parser.parse_args()
     url = args.url
     prefix = args.prefix
