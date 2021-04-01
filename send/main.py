@@ -2,7 +2,7 @@ import requests
 from datetime import datetime, timedelta
 
 GRAFANA_URL = 'https://<your-subdomain>.hosted-metrics.grafana.net/metrics'
-GRAFANA_APIKEY = '<your api key from grafana.net -- should be editor role>'
+GRAFANA_APIKEY = '<your user from grafana.net>:<your api key from grafana.net -- should be editor role>'
 
 
 def write_metrics(metrics, url, apikey):
