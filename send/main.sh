@@ -1,6 +1,6 @@
 #!/bin/bash
 
-key="<api-key>"
+key="<user_id>:<api-key>"
 addr="https://<your-instance>.hosted-metrics.grafana.net"
 
 curl -X POST -H "Authorization: Bearer $key" -H "Content-Type: application/json" "$addr/metrics" -d '[{
