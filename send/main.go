@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"time"
 
@@ -11,7 +12,7 @@ import (
 )
 
 var url = "https://<your-subdomain>.hosted-metrics.grafana.net/metrics"
-var apiKey = "<your api key from grafana.net -- should be editor role>"
+var apiKey = "<your user from grafana.net>:<your api key from grafana.net -- should be editor (or MetricsPublisher) role>"
 
 // createPoint creates a datapoint, i.e. a MetricData structure, and makes sure the id is set.
 func createPoint(name string, interval int, val float64, time int64) *schema.MetricData {
@@ -66,8 +67,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	buf := make([]byte, 4096)
-	n, err := resp.Body.Read(buf)
+	defer resp.Body.Close()
+	respData, err := io.ReadAll(resp.Body)
+	if err != nil {
+		panic(err)
+	}
 	fmt.Println(resp.StatusCode, resp.Status)
-	fmt.Println(string(buf[:n]))
+	fmt.Println(string(respData))
 }
