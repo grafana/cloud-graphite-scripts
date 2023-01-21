@@ -1,9 +1,10 @@
 #!/bin/bash
 
+# See https://grafana.com/docs/grafana-cloud/data-configuration/metrics/metrics-graphite/http-api/#http-api 
 key="<user_id>:<api-key>"
-addr="https://<your-instance>.hosted-metrics.grafana.net"
+addr="graphite-<something>.grafana.net/graphite/metrics"
 
-curl -X POST -H "Authorization: Bearer $key" -H "Content-Type: application/json" "$addr/metrics" -d '[{
+curl -X POST -H "Authorization: Bearer $key" -H "Content-Type: application/json" "$addr" -d '[{
     "name": "test.metric",
     "interval": 10,
     "value": 12.345,
