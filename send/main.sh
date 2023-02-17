@@ -8,12 +8,12 @@ curl -X POST -H "Authorization: Bearer $key" -H "Content-Type: application/json"
     "name": "test.metric",
     "interval": 10,
     "value": 12.345,
-    "time": 1534685580
+    "time": 1676622710 # Note, this NEEDS to be updated with the current Unix time: https://www.unixtimestamp.com/
 },
 {
     "name": "test.metric",
     "interval": 10,
-    "value": 12.345,
-    "time": 1534685590
+    "value": 67.891,
+    "time": 1676622720 # Note, this NEEDS to be updated with the current Unix time + 10: https://www.unixtimestamp.com/
     }
 ]'
