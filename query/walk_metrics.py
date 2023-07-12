@@ -15,17 +15,25 @@ import unicodedata
 
 outLock = Lock()
 
+class BearerAuth(requests.auth.AuthBase):
+    def __init__(self, token):
+        self.token = token
+    def __call__(self, r):
+        r.headers["authorization"] = "Bearer " + self.token
+        return r
+
 def output(msg):
     with outLock:
         print(msg)
         sys.stdout.flush()
 
 class Walker(Thread):
-    def __init__(self, queue, url, user=None, password=None, seriesFrom=None, depth=None):
+    def __init__(self, queue, url, user=None, password=None, bearer=None,seriesFrom=None, depth=None):
         Thread.__init__(self)
         self.queue = queue
         self.url = url
         self.user = user
+        self.bearer = bearer
         self.password = password
         self.seriesFrom = seriesFrom
         self.depth = depth
@@ -59,6 +67,8 @@ class Walker(Thread):
         auth = None
         if self.user is not None:
             auth = (self.user, self.password)
+        if self.bearer is not None:
+            auth = BearerAuth(self.bearer)
 
 
         r = requests.get(
@@ -92,6 +102,7 @@ if __name__ == '__main__':
     parser.add_argument("--prefix", help="Metrics prefix", required=False, default='')
     parser.add_argument("--user", help="Basic Auth username", required=False)
     parser.add_argument("--password", help="Basic Auth password", required=False)
+    parser.add_argument("--bearer", help="bearer auth token", required=False)
     parser.add_argument("--concurrency", help="Concurrency", default=8, required=False, type=int)
     parser.add_argument("--from", dest='seriesFrom', help="Only get series that have been active since this time.", required=False)
     parser.add_argument("--depth", type=int, help="Maximum depth to traverse. If set, then the branches at the depth are printed.", required=False)
@@ -99,6 +110,7 @@ if __name__ == '__main__':
     url = args.url
     prefix = args.prefix
     user = args.user
+    bearer = args.bearer
     password = args.password
     concurrency = args.concurrency
     seriesFrom = args.seriesFrom
@@ -107,7 +119,7 @@ if __name__ == '__main__':
     queue = Queue()
 
     for x in range(concurrency):
-        worker = Walker(queue, url, user, password, seriesFrom, depth)
+        worker = Walker(queue, url, user, password, bearer, seriesFrom, depth)
         worker.daemon = True
         worker.start()
 
